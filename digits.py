@@ -30,8 +30,10 @@ def learn_digits():
     # To get the intended outputs (the actual number that this is supposed to be a picture of) use `digits_set.target`
     #     This returns a tuple (1797,) because there are 1797 labels (i.e. one for each image)
     digits_set = datasets.load_digits()
-    print(f'Shape of input data array:  {digits_set.data.shape}')
-    print(f'Shape of output data array: {digits_set.target.shape}')
+    inputs = digits_set.data
+    outputs = digits_set.target
+    print(f'Shape of input data array:  {inputs.shape}')
+    print(f'Shape of output data array: {outputs.shape}')
 
     # This is the neural network
     classifier = MLPClassifier(random_state=0)
@@ -39,17 +41,17 @@ def learn_digits():
     test_size = 10
 
     # Train on all the data AFTER the first 10 (i.e. on 1787 images)
-    classifier.fit(digits_set.data[test_size:], digits_set.target[test_size:])
+    classifier.fit(inputs[test_size:], outputs[test_size:])
 
     # Test on ONLY the first 10 digits
     # (which coincidentally are themselves the digits 1,2,3,4,5,6,7,8,9 in order)
-    results = classifier.predict(digits_set.data[:test_size])
+    results = classifier.predict(inputs[:test_size])
 
     # Print to the terminal the results
     for i in range(len(results)):
         print('Neural Net guessed: ' + str(results[i]))
-        print('Actual value: ' + str(digits_set.target[i]))
-        img = digits_set.data[i].reshape(8,8) # reshape to look like an 8x8 image
+        print('Actual value: ' + str(outputs[i]))
+        img = inputs[i].reshape(8,8) # reshape to look like an 8x8 image
         display_img(img)
 
 if __name__ == '__main__':
