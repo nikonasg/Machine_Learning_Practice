@@ -11,10 +11,15 @@ def display_img(img):
     dark_white = '\u001B[47m  '
     light_white = '\u001B[107m  '
     reset_color = '\u001B[0m'
-    percs = np.percentile(np.unique(img), (25,50,75))
+    percs = np.percentile(np.unique(img), (25, 50, 75))
     for r in range(img.shape[0]):
         for c in range(img.shape[1]):
-            print(dark_black if img[r,c] <= percs[0] else light_black if img[r,c] <= percs[1] else dark_white if img[r,c] <= percs[2] else light_white, end="")
+            print(
+                dark_black if img[r, c] <= percs[0]
+                else light_black if img[r, c] <= percs[1]
+                else dark_white if img[r, c] <= percs[2]
+                else light_white, end=""
+            )
         print(reset_color)
     print()
 
@@ -31,9 +36,9 @@ def learn_digits():
     #     This returns a tuple (1797,) because there are 1797 labels (i.e. one for each image)
     digits_set = datasets.load_digits()
     inputs = digits_set.data
-    outputs = digits_set.target
+    target = digits_set.target
     print(f'Shape of input data array:  {inputs.shape}')
-    print(f'Shape of output data array: {outputs.shape}')
+    print(f'Shape of output data array: {target.shape}')
 
     # This is the neural network
     classifier = MLPClassifier(random_state=0)
@@ -41,7 +46,7 @@ def learn_digits():
     test_size = 10
 
     # Train on all the data AFTER the first 10 (i.e. on 1787 images)
-    classifier.fit(inputs[test_size:], outputs[test_size:])
+    classifier.fit(inputs[test_size:], target[test_size:])
 
     # Test on ONLY the first 10 digits
     # (which coincidentally are themselves the digits 1,2,3,4,5,6,7,8,9 in order)
@@ -50,8 +55,8 @@ def learn_digits():
     # Print to the terminal the results
     for i in range(len(results)):
         print('Neural Net guessed: ' + str(results[i]))
-        print('Actual value: ' + str(outputs[i]))
-        img = inputs[i].reshape(8,8) # reshape to look like an 8x8 image
+        print('Actual value: ' + str(target[i]))
+        img = inputs[i].reshape(8, 8)  # reshape to look like an 8x8 image
         display_img(img)
 
 if __name__ == '__main__':
