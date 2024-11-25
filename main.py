@@ -23,10 +23,7 @@ def display_img(img):
         print(reset_color)
     print()
 
-def learn_digits():
-    # This just prints information about the dataset. Uncomment this `print` see the description
-    # print(digits_set.DESCR)
-
+def main():
     # This is the dataset.
     # To get the inputs (pixels of each image) use `digits_set.data`.
     #     This returns (1797, 64) because there are 1797 images, and each one has 64 pixels
@@ -60,4 +57,4 @@ def learn_digits():
         display_img(img)
 
 if __name__ == '__main__':
-    learn_digits()
+    main()
